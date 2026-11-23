@@ -16,9 +16,11 @@
 
       <form id="new-todo">
         <input id="title" name="title" placeholder="What needs doing?" autocomplete="off" required />
+        <input id="tags" name="tags" placeholder="Tags, comma-separated" autocomplete="off" />
         <button type="submit">Add</button>
       </form>
 
+      <nav id="tag-filter" class="tag-filter" aria-label="Filter by tag" hidden></nav>
       <p id="error" class="error" hidden></p>
       <ul id="todos"></ul>
       <footer id="summary"></footer>

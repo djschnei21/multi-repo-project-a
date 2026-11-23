@@ -57,12 +57,21 @@ h1 {
 
 form {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin: 1.25rem 0;
 }
 
 input[name='title'] {
+  flex: 1 1 100%;
+}
+
+input[name='tags'] {
   flex: 1;
+}
+
+input[name='title'],
+input[name='tags'] {
   padding: 0.6rem 0.8rem;
   border-radius: 0.5rem;
   border: 1px solid var(--border);
@@ -101,6 +110,34 @@ li span {
 li.done span {
   text-decoration: line-through;
   color: var(--muted);
+}
+
+.tag-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.tag {
+  padding: 0.15rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.tag:hover,
+.tag[aria-pressed='true'] {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tag[aria-pressed='true'] {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
 }
 
 .remove {
