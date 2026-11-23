@@ -1,0 +1,16 @@
+{
+  "name": "todo-web",
+  "version": "1.0.0",
+  "description": "Frontend for the multi-repo demo: a vanilla JS Todo app that talks to todo-api",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}

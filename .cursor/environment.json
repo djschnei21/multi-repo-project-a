@@ -1,0 +1,19 @@
+{
+  "install": "npm install && npm install --prefix ../multi-repo-project-b",
+  "terminals": [
+    {
+      "name": "todo-api",
+      "command": "cd ../multi-repo-project-b && npm run dev",
+      "description": "Backend from multi-repo-project-b on http://localhost:4000"
+    },
+    {
+      "name": "todo-web",
+      "command": "npm run dev",
+      "description": "Frontend on http://localhost:3000, proxies /api to the backend on :4000"
+    }
+  ],
+  "ports": [
+    { "name": "todo-web", "port": 3000 },
+    { "name": "todo-api", "port": 4000 }
+  ]
+}

@@ -1,0 +1,14 @@
+---
+description: Keep the frontend API client in sync with the backend contract
+globs: public/**,server.js
+alwaysApply: false
+---
+
+- The backend contract is `openapi.yaml` in multi-repo-project-b (checked out next to this repo).
+- Every call to the backend goes through a method on the client in `public/api.js`.
+  The UI in `public/app.js` only uses those methods.
+- When you add a client method, check that the endpoint exists in the backend. If it
+  does not, add it there in the same task (handler, `openapi.yaml`, and a test).
+- Every client method needs a test in `test/api.test.js` that uses the fake `fetchImpl`.
+- Build DOM nodes with `document.createElement` and `textContent`, never `innerHTML`
+  with API data.

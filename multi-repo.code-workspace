@@ -1,0 +1,7 @@
+{
+  "folders": [
+    { "name": "todo-web (frontend)", "path": "." },
+    { "name": "todo-api (backend)", "path": "../multi-repo-project-b" }
+  ],
+  "settings": {}
+}
