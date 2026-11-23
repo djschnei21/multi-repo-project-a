@@ -1,6 +1,13 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { ApiError, createApiClient, summarize } from '../public/api.js';
+import {
+  ApiError,
+  allTags,
+  createApiClient,
+  filterByTag,
+  parseTags,
+  summarize,
+} from '../public/api.js';
 
 function fakeFetch(status, payload) {
   const calls = [];
@@ -31,6 +38,18 @@ test('createTodo POSTs the title as JSON', async () => {
   assert.deepEqual(JSON.parse(calls[0].body), { title: 'b' });
 });
 
+test('createTodo sends tags when given', async () => {
+  const { calls, fetchImpl } = fakeFetch(201, { id: 2, title: 'b', done: false, tags: ['work'] });
+  await createApiClient({ fetchImpl }).createTodo('b', ['work']);
+  assert.deepEqual(JSON.parse(calls[0].body), { title: 'b', tags: ['work'] });
+});
+
+test('createTodo omits an empty tag list', async () => {
+  const { calls, fetchImpl } = fakeFetch(201, { id: 2, title: 'b', done: false, tags: [] });
+  await createApiClient({ fetchImpl }).createTodo('b', []);
+  assert.deepEqual(JSON.parse(calls[0].body), { title: 'b' });
+});
+
 test('setDone PATCHes the done flag', async () => {
   const { calls, fetchImpl } = fakeFetch(200, { id: 3, title: 'c', done: true });
   await createApiClient({ fetchImpl }).setDone(3, true);
@@ -57,4 +76,24 @@ test('errors from the API become ApiError', async () => {
 test('summarize counts completed todos', () => {
   assert.equal(summarize([]), '0 of 0 done');
   assert.equal(summarize([{ done: true }, { done: false }, { done: true }]), '2 of 3 done');
+});
+
+test('parseTags splits comma-separated input', () => {
+  assert.deepEqual(parseTags(' work, urgent ,,'), ['work', 'urgent']);
+  assert.deepEqual(parseTags(''), []);
+});
+
+test('allTags collects sorted unique tags and tolerates a missing tags field', () => {
+  const todos = [{ tags: ['work', 'urgent'] }, { tags: ['home', 'work'] }, {}];
+  assert.deepEqual(allTags(todos), ['home', 'urgent', 'work']);
+});
+
+test('filterByTag keeps only todos with the tag', () => {
+  const todos = [
+    { id: 1, tags: ['work'] },
+    { id: 2, tags: ['home'] },
+    { id: 3 },
+  ];
+  assert.deepEqual(filterByTag(todos, 'work').map((todo) => todo.id), [1]);
+  assert.equal(filterByTag(todos, null), todos);
 });

@@ -25,7 +25,8 @@ export function createApiClient({ baseUrl = '', fetchImpl = (...args) => fetch(.
   return {
     health: () => request('/api/health'),
     listTodos: () => request('/api/todos'),
-    createTodo: (title) => request('/api/todos', { method: 'POST', body: { title } }),
+    createTodo: (title, tags) =>
+      request('/api/todos', { method: 'POST', body: tags?.length ? { title, tags } : { title } }),
     setDone: (id, done) => request(`/api/todos/${id}`, { method: 'PATCH', body: { done } }),
     deleteTodo: (id) => request(`/api/todos/${id}`, { method: 'DELETE' }),
   };
@@ -34,4 +35,20 @@ export function createApiClient({ baseUrl = '', fetchImpl = (...args) => fetch(.
 export function summarize(todos) {
   const done = todos.filter((todo) => todo.done).length;
   return `${done} of ${todos.length} done`;
+}
+
+export function parseTags(text) {
+  return text
+    .split(',')
+    .map((tag) => tag.trim())
+    .filter(Boolean);
+}
+
+// `tags` is optional in the contract, so older responses may omit it.
+export function allTags(todos) {
+  return [...new Set(todos.flatMap((todo) => todo.tags ?? []))].sort();
+}
+
+export function filterByTag(todos, tag) {
+  return tag ? todos.filter((todo) => (todo.tags ?? []).includes(tag)) : todos;
 }
