@@ -31,7 +31,7 @@ Run `npm test` in each repo to run its tests. Set `API_URL` to point the fronten
 | --- | --- |
 | `AGENTS.md` (both repos) | Tells agents what the repo does, where the sibling repo is, and that `openapi.yaml` is the shared contract |
 | `.cursor/rules/*.mdc` (both repos) | Rules scoped by file glob: `api-client.mdc` here, `api-contract.mdc` in the backend |
-| `.cursor/environment.json` (this repo) | Cloud Agent config for the two-repo environment: install both repos, then start the API and web app in named terminals |
+| `.cursor/environment.json` (this repo) | Cloud Agent config for the two-repo environment: install both repos, then start the API (:4000) and web app (:3000) in watch mode, logging to `/tmp/todo-api.log` and `/tmp/todo-web.log` |
 | `multi-repo.code-workspace` (this repo) | Opens both repos as one multi-root workspace in the Cursor editor |
 
 To use `environment.json` in a multi-repo Cloud Agent environment, add both repos
