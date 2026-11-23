@@ -1,14 +1,14 @@
 {
-  "install": "npm install && npm install --prefix ../multi-repo-project-b",
+  "install": "cd /agent/repos/multi-repo-project-b && npm ci && cd /agent/repos/multi-repo-project-a && npm ci",
   "terminals": [
     {
       "name": "todo-api",
-      "command": "cd ../multi-repo-project-b && npm run dev",
+      "command": "cd /agent/repos/multi-repo-project-b && npm run dev",
       "description": "Backend from multi-repo-project-b on http://localhost:4000"
     },
     {
       "name": "todo-web",
-      "command": "npm run dev",
+      "command": "cd /agent/repos/multi-repo-project-a && npm run dev",
       "description": "Frontend on http://localhost:3000, proxies /api to the backend on :4000"
     }
   ],

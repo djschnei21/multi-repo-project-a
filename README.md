@@ -36,8 +36,9 @@ Run `npm test` in each repo to run its tests. Set `API_URL` to point the fronten
 
 To use `environment.json` in a multi-repo Cloud Agent environment, add both repos
 to the environment in the Cursor dashboard and point the environment's
-environment.json location at this repo. The config assumes both repos are checked
-out side by side, which is how multi-repo Cloud Agent environments lay them out.
+environment.json location at this repo. Multi-repo Cloud Agent environments clone
+each repo to `/agent/repos/<repo-name>` and run `install` from `/agent`, so the
+config uses those full paths.
 
 ## Demo prompts
 
